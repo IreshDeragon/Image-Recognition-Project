@@ -1,2 +1,2 @@
 # Image-Recognition-Project
-Hello this is our awesome project ! Lets go !
+Hello this is our awesome project !
