@@ -126,7 +126,7 @@ int main() {
     for(int i = 0; i < p.nbOut; i++){
         cout << fixed << "predict :"<<result[i] << endl;
     }
-    p.train(1000, 0.1, points, Y, 4, 0);
+    p.train(1000, 0.1, points, Y, 4);
     p.tostring();
 
     float* result2 = p.predict(points[3]);

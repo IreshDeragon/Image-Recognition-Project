@@ -4,7 +4,7 @@
 #include <math.h>
 
 
-PMC::PMC(int32_t layer, int32_t* nbNeurons, int32_t nbEntry, int32_t nbOut) {
+PMC::PMC(int layer, int* nbNeurons, int nbEntry, int nbOut) {
     this->layer = layer;
     this->nbNeurons = nbNeurons;
     this->nbEntry = nbEntry;
@@ -80,7 +80,7 @@ float PMC::calculTotalPredict(int layer, int nbInput, int output, float *input) 
     return tanh(total);
 }
 
-float *PMC::predict(float *entry) {
+float* PMC::predict(float *entry) {
     double total;
     //calcul résultats des neurones 1ère couche
     for (int j = 0; j < this->nbNeurons[0]; j++) {
@@ -131,7 +131,7 @@ void PMC::calcul_sigma(float **sigma) {
     }
 }
 
-void PMC::train(int32_t epoch, float LR, float **points, float **Y, int32_t pointsSize) {
+void PMC::train(int epochs, float LR, float **points, float **Y, int pointsSize) {
     //initialisation sigma[]
     float **sigma = new float *[layer + 1];
     for (int i = 0; i < layer + 1; i++) {
@@ -143,7 +143,7 @@ void PMC::train(int32_t epoch, float LR, float **points, float **Y, int32_t poin
     }
 
     //Itérations sur le batch
-    for (int epoch = 0; epoch < epoch; epoch++) {
+    for (int epoch = 0; epoch < epochs; epoch++) {
         int point = rand() % pointsSize;
         float *result = predict(points[point]);
 
@@ -178,7 +178,7 @@ void PMC::train(int32_t epoch, float LR, float **points, float **Y, int32_t poin
     }
 }
 
-void PMC::updateWeights(int32_t layer, int32_t nbInput, int32_t output, float *inputs, float sigma, float LR) {
+void PMC::updateWeights(int layer, int nbInput, int output, float *inputs, float sigma, float LR) {
     for (int input = 1; input < nbInput + 1; input++) {
         this->weights[layer][output][input] -= LR * inputs[input - 1] * sigma;
     }

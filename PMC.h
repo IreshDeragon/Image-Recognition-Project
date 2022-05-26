@@ -1,11 +1,11 @@
-#ifndef UNTITLED_PMC_H
-#define UNTITLED_PMC_H
+#ifndef UNDEFINED_PMC
+#define UNDEFINED_PMC
 
 #include <string>
 #include <iostream>
+#include <stdlib.h>
 
 #define STRING(num) STR(num)
-#define STR(num) #num
 
 #include <cstdint>
 
@@ -19,17 +19,17 @@ public:
     int layer;
     float **inputs;
 
-    PMC(int32_t layer, int32_t* nbNeurons, int32_t nbEntry, int32_t nbOut);
+    PMC(int layer, int *nbNeurons, int nbEntry, int nbOut);
 
-    float calculTotalPredict(int32_t layer, int32_t nbInput, int32_t output, float *input);
+    float calculTotalPredict(int layer, int nbInput, int output, float *input);
 
-    float calculTotalSigma(int32_t layer, int32_t nbInput, int32_t output, float *sigma);
+    float calculTotalSigma(int layer, int nbInput, int output, float *sigma);
 
     float *predict(float *entry);
 
-    void train(int32_t epoch, float LR, float **points, float **Y, int32_t pointsSize);
+    void train(int epoch, float LR, float **points, float **Y, int pointsSize);
 
-    void updateWeights(int32_t layer, int32_t nbInput, int32_t output, float *inputs, float sigma, float LR);
+    void updateWeights(int layer, int nbInput, int output, float *inputs, float sigma, float LR);
 
     void tostring();
 
