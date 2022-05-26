@@ -1,31 +1,42 @@
 #ifndef UNTITLED_PMC_H
 #define UNTITLED_PMC_H
+
 #include <string>
 #include <iostream>
+
 #define STRING(num) STR(num)
 #define STR(num) #num
 
+#include <cstdint>
 
 class PMC {
 
-    public:
-    double*** weights;
-    int* nbNeurons;
+public:
+    float ***weights;
+    int *nbNeurons;
     int nbEntry;
     int nbOut;
     int layer;
-    double** inputs;
-    PMC(int layer, int* nbNeurons, int nbEntry, int nbOut);
-    double calculTotalPredict(int layer, int nbInput, int output, double *input);
-    double calculTotalSigma(int layer, int nbInput, int output, double *sigma);
-    double* predict(double* entry);
-    void train(int epoch, double LR, double** points, double** Y, int pointsSize, int YSize);
-    void updateWeights(int layer, int nbInput, int output, double* inputs, double sigma, double LR);
+    float **inputs;
+
+    PMC(int32_t layer, int32_t* nbNeurons, int32_t nbEntry, int32_t nbOut);
+
+    float calculTotalPredict(int32_t layer, int32_t nbInput, int32_t output, float *input);
+
+    float calculTotalSigma(int32_t layer, int32_t nbInput, int32_t output, float *sigma);
+
+    float *predict(float *entry);
+
+    void train(int32_t epoch, float LR, float **points, float **Y, int32_t pointsSize);
+
+    void updateWeights(int32_t layer, int32_t nbInput, int32_t output, float *inputs, float sigma, float LR);
+
     void tostring();
-    void calcul_sigma(double** sigma);
 
+    void calcul_sigma(float **sigma);
+
+    ~PMC();
 };
-
 
 
 #endif
