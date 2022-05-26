@@ -1,53 +1,52 @@
 #include "PMC.h"
 #include <stdlib.h>
-#include <string>
-#include <iostream>
+
 #include <math.h>
 
 
-PMC::PMC(int layer, int *nbNeurons, int nbEntry, int nbOut) {
+PMC::PMC(int32_t layer, int32_t* nbNeurons, int32_t nbEntry, int32_t nbOut) {
     this->layer = layer;
     this->nbNeurons = nbNeurons;
     this->nbEntry = nbEntry;
     this->nbOut = nbOut;
 
     //Instantiation du tableau de poids
-    if(layer!=0){
-        weights = new double **[layer + 1];
+    if (layer != 0) {
+        weights = new float **[layer + 1];
         //couche 0
-        weights[0] = new double *[nbNeurons[0]];
+        weights[0] = new float *[nbNeurons[0]];
         for (int j = 0; j < nbNeurons[0]; j++) {
-            weights[0][j] = new double[nbEntry + 1];
+            weights[0][j] = new float[nbEntry + 1];
             for (int w = 0; w < nbEntry + 1; w++) {
-                weights[0][j][w] = (double) rand() / RAND_MAX * 2 - 1;
+                weights[0][j][w] = (float) rand() / RAND_MAX * 2 - 1;
             }
         }
         //autres couches
         for (int i = 0; i < layer; i++) {
-            weights[i] = new double *[nbNeurons[i]];
+            weights[i] = new float *[nbNeurons[i]];
             for (int j = 0; j < nbNeurons[i]; j++) {
-                weights[i][j] = new double[nbNeurons[i - 1] + 1];
+                weights[i][j] = new float[nbNeurons[i - 1] + 1];
                 for (int w = 0; w < nbNeurons[i - 1] + 1; w++) {
-                    weights[i][j][w] = (double) rand() / RAND_MAX * 2 - 1;
+                    weights[i][j][w] = (float) rand() / RAND_MAX * 2 - 1;
                 }
             }
         }
         //dernière couche
-        weights[layer] = new double *[nbOut];
+        weights[layer] = new float *[nbOut];
         for (int i = 0; i < nbOut; i++) {
-            weights[layer][i] = new double[nbNeurons[layer - 1] + 1];
+            weights[layer][i] = new float[nbNeurons[layer - 1] + 1];
             for (int j = 0; j < nbNeurons[layer - 1] + 1; j++) {
-                weights[layer][i][j] = (double) rand() / RAND_MAX * 2 - 1;
+                weights[layer][i][j] = (float) rand() / RAND_MAX * 2 - 1;
             }
         }
-    }else{ //si layer est égal à 0
-        weights = new double **[1];
+    } else { //si layer est égal à 0
+        weights = new float **[1];
         //couche 0
-        weights[0] = new double *[nbOut];
+        weights[0] = new float *[nbOut];
         for (int j = 0; j < nbOut; j++) {
-            weights[0][j] = new double[nbEntry + 1];
+            weights[0][j] = new float[nbEntry + 1];
             for (int w = 0; w < nbEntry + 1; w++) {
-                weights[0][j][w] = (double) rand() / RAND_MAX * 2 - 1;
+                weights[0][j][w] = (float) rand() / RAND_MAX * 2 - 1;
             }
         }
     }
@@ -55,14 +54,14 @@ PMC::PMC(int layer, int *nbNeurons, int nbEntry, int nbOut) {
 
 
     //Instatiation du tableau d'input (spikes)
-    inputs = new double *[layer + 1];
+    inputs = new float *[layer + 1];
     for (int i = 0; i < layer + 1; i++) {
         if (i == 0) {
-            inputs[i] = new double[nbEntry + 1];
+            inputs[i] = new float[nbEntry + 1];
         } else if (i == layer) {
-            inputs[i] = new double[nbOut + 1];
+            inputs[i] = new float[nbOut + 1];
         } else {
-            inputs[i] = new double[nbNeurons[i] + 1];
+            inputs[i] = new float[nbNeurons[i] + 1];
         }
     }
 }
@@ -73,15 +72,15 @@ PMC::PMC(int layer, int *nbNeurons, int nbEntry, int nbOut) {
  *
  **/
 
-double PMC::calculTotalPredict(int layer, int nbInput, int output, double *input) {
-    double total = this->weights[layer][output][0];
+float PMC::calculTotalPredict(int layer, int nbInput, int output, float *input) {
+    float total = this->weights[layer][output][0];
     for (int t = 0; t < nbInput; t++) {
-        total += this->weights[layer][output][t+1] * input[t];
+        total += this->weights[layer][output][t + 1] * input[t];
     }
     return tanh(total);
 }
 
-double *PMC::predict(double *entry) {
+float *PMC::predict(float *entry) {
     double total;
     //calcul résultats des neurones 1ère couche
     for (int j = 0; j < this->nbNeurons[0]; j++) {
@@ -107,17 +106,17 @@ double *PMC::predict(double *entry) {
  * Fonctions permettant d'implémenter le Train
  *
  **/
-double PMC::calculTotalSigma(int layer, int nbOutput, int input, double *sigma) {
-    double total = 0;
+float PMC::calculTotalSigma(int layer, int nbOutput, int input, float *sigma) {
+    float total = 0;
     for (int output = 0; output < nbOutput; output++) {
         total += this->weights[layer][output][input] * sigma[output];
     }
     return total;
 }
 
-void PMC::calcul_sigma(double **sigma) {
+void PMC::calcul_sigma(float **sigma) {
     //calcul
-    double total = 0;
+    float total = 0;
     for (int i = 0; i < this->nbNeurons[layer - 1]; i++) {
         total = calculTotalSigma(this->layer, this->nbOut, i, sigma[layer]); //total avant dernière couche
         sigma[layer - 1][i] = (1.0 - (this->inputs[layer - 1][i] * this->inputs[layer - 1][i])) * total;
@@ -126,26 +125,27 @@ void PMC::calcul_sigma(double **sigma) {
     for (int l = this->layer - 1; l > 0; l--) {
         for (int i = 0; i < this->nbNeurons[l - 1]; i++) {
             total = calculTotalSigma(l, this->nbNeurons[l], i, sigma[l]);
-            sigma[l - 1][i] = (1.0 - (this->inputs[l - 1][i] * this->inputs[l - 1][i])) * total; //total couches précédentes
+            sigma[l - 1][i] =
+                    (1.0 - (this->inputs[l - 1][i] * this->inputs[l - 1][i])) * total; //total couches précédentes
         }
     }
 }
 
-void PMC::train(int epochs, double LR, double **points, double **Y, int pointsSize, int YSize) {
+void PMC::train(int32_t epoch, float LR, float **points, float **Y, int32_t pointsSize) {
     //initialisation sigma[]
-    double **sigma = new double *[layer + 1];
+    float **sigma = new float *[layer + 1];
     for (int i = 0; i < layer + 1; i++) {
         if (i == layer) {
-            sigma[i] = new double[nbOut];
+            sigma[i] = new float[nbOut];
         } else {
-            sigma[i] = new double[nbNeurons[i] + 1];
+            sigma[i] = new float[nbNeurons[i] + 1];
         }
     }
 
     //Itérations sur le batch
-    for (int epoch = 0; epoch < epochs; epoch++) {
+    for (int epoch = 0; epoch < epoch; epoch++) {
         int point = rand() % pointsSize;
-        double *result = predict(points[point]);
+        float *result = predict(points[point]);
 
 
         //calcul sigma dernière couche
@@ -178,10 +178,15 @@ void PMC::train(int epochs, double LR, double **points, double **Y, int pointsSi
     }
 }
 
-void PMC::updateWeights(int layer, int nbInput, int output, double *inputs, double sigma, double LR) {
+void PMC::updateWeights(int32_t layer, int32_t nbInput, int32_t output, float *inputs, float sigma, float LR) {
     for (int input = 1; input < nbInput + 1; input++) {
         this->weights[layer][output][input] -= LR * inputs[input - 1] * sigma;
     }
+}
+
+
+PMC::~PMC() {
+
 }
 
 

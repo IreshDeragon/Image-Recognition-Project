@@ -14,7 +14,6 @@ struct Model {
     double **inputs;
 };
 
-
 Model createModelPMC(int layer, int *nbNeurons, int nbEntry, int nbOut);
 
 double calculTotalPredict(Model model, int layer, int nbInput, int output, double *input);

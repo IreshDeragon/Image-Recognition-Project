@@ -87,9 +87,9 @@ int main() {
 
     //PMC
 
-    double** points = new double *[6];
-    for(int i = 0 ; i<6 ; i++){
-        points[i] = new double[2];
+    float** points = new float *[4];
+    for(int i = 0 ; i<4 ; i++){
+        points[i] = new float[2];
     }
     points[0][0] = -1;
     points[0][1] = -1;
@@ -102,9 +102,9 @@ int main() {
 
 
     //double Y[4][2] = {1,-1, 1, -1, 1, -1, -1, 1};
-    double** Y = new double *[6];
-    for(int i = 0 ; i<6 ; i++){
-        Y[i] = new double[2];
+    float** Y = new float *[4];
+    for(int i = 0 ; i<4 ; i++){
+        Y[i] = new float[2];
     }
     Y[0][0] = 1;
     Y[0][1] = -1;
@@ -120,21 +120,21 @@ int main() {
     int* neurons = new int[2];
     neurons[0] = 2;
     //neurons[0] = 1;
-   /* PMC p = PMC(1, neurons, 2, 2);
+    PMC p = PMC(1, neurons, 2, 2);
     p.tostring();
-    double* result = p.predict(points[3]);
+    float* result = p.predict(points[3]);
     for(int i = 0; i < p.nbOut; i++){
         cout << fixed << "predict :"<<result[i] << endl;
     }
-    p.train(10000, 0.1, points, Y, 6, 6);
+    p.train(1000, 0.1, points, Y, 4, 0);
     p.tostring();
 
-    double* result2 = p.predict(points[3]);
+    float* result2 = p.predict(points[3]);
     for(int i = 0; i < p.nbOut; i++){
         cout << fixed <<"predict : " << result2[i] << endl;
-    }*/
+    }
 
-    Model PMC = createModelPMC(1, neurons, 2, 2);
+    /*Model PMC = createModelPMC(1, neurons, 2, 2);
     tostring(PMC);
     double* result = predictClassPMC(PMC, points[3]);
     for(int i = 0; i < PMC.nbOut; i++){
@@ -146,7 +146,7 @@ int main() {
     double* result2 = predictClassPMC(PMC, points[3]);
     for(int i = 0; i < PMC.nbOut; i++){
         cout << fixed <<"predict : " << result2[i] << endl;
-    }
+    }*/
 
 
     //PMC
