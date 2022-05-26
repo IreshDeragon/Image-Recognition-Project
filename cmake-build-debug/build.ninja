@@ -61,6 +61,12 @@ build CMakeFiles/untitled.dir/PMC.cpp.obj: CXX_COMPILER__untitled_Debug C$:/User
   OBJECT_DIR = CMakeFiles\untitled.dir
   OBJECT_FILE_DIR = CMakeFiles\untitled.dir
 
+build CMakeFiles/untitled.dir/ProjetML.cpp.obj: CXX_COMPILER__untitled_Debug C$:/Users/ALASMI/CLionProjects/untitled/ProjetML.cpp || cmake_object_order_depends_target_untitled
+  DEP_FILE = CMakeFiles\untitled.dir\ProjetML.cpp.obj.d
+  FLAGS = -g -std=gnu++14
+  OBJECT_DIR = CMakeFiles\untitled.dir
+  OBJECT_FILE_DIR = CMakeFiles\untitled.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target untitled
@@ -69,7 +75,7 @@ build CMakeFiles/untitled.dir/PMC.cpp.obj: CXX_COMPILER__untitled_Debug C$:/User
 #############################################
 # Link the executable untitled.exe
 
-build untitled.exe: CXX_EXECUTABLE_LINKER__untitled_Debug CMakeFiles/untitled.dir/main.cpp.obj CMakeFiles/untitled.dir/PMC.cpp.obj
+build untitled.exe: CXX_EXECUTABLE_LINKER__untitled_Debug CMakeFiles/untitled.dir/main.cpp.obj CMakeFiles/untitled.dir/PMC.cpp.obj CMakeFiles/untitled.dir/ProjetML.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\untitled.dir

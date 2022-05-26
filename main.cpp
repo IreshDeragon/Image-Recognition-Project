@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "PMC.h"
+#include "ProjetML.h"
 using namespace std;
 
 int predict(int Xk[], float W[], int size) {
@@ -119,17 +120,31 @@ int main() {
     int* neurons = new int[2];
     neurons[0] = 2;
     //neurons[0] = 1;
-    PMC p = PMC(1, neurons, 2, 2);
+   /* PMC p = PMC(1, neurons, 2, 2);
     p.tostring();
     double* result = p.predict(points[3]);
     for(int i = 0; i < p.nbOut; i++){
         cout << fixed << "predict :"<<result[i] << endl;
     }
-    p.train(1000, 0.1, points, Y, 6, 6);
+    p.train(10000, 0.1, points, Y, 6, 6);
     p.tostring();
 
     double* result2 = p.predict(points[3]);
     for(int i = 0; i < p.nbOut; i++){
+        cout << fixed <<"predict : " << result2[i] << endl;
+    }*/
+
+    Model PMC = createModelPMC(1, neurons, 2, 2);
+    tostring(PMC);
+    double* result = predictClassPMC(PMC, points[3]);
+    for(int i = 0; i < PMC.nbOut; i++){
+        cout << fixed << "predict :"<<result[i] << endl;
+    }
+    trainClassPMC(PMC,1000, 0.1, points, Y, 4, 4);
+    tostring(PMC);
+
+    double* result2 = predictClassPMC(PMC, points[3]);
+    for(int i = 0; i < PMC.nbOut; i++){
         cout << fixed <<"predict : " << result2[i] << endl;
     }
 

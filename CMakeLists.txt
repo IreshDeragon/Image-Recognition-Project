@@ -3,4 +3,4 @@ project(untitled)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(untitled main.cpp PMC.cpp PMC.h)
+add_executable(untitled main.cpp PMC.cpp PMC.h ProjetML.cpp ProjetML.h)
