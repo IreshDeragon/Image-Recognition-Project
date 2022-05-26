@@ -140,7 +140,7 @@ int main() {
     for(int i = 0; i < PMC.nbOut; i++){
         cout << fixed << "predict :"<<result[i] << endl;
     }
-    trainClassPMC(PMC,1000, 0.1, points, Y, 4, 4);
+    trainClassPMC(PMC,1000, 0.1, points, Y, 4);
     tostring(PMC);
 
     double* result2 = predictClassPMC(PMC, points[3]);

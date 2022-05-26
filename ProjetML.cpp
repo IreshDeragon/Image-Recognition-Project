@@ -132,7 +132,7 @@ void calcul_sigma(Model model, double **sigma) {
     }
 }
 
-void trainClassPMC(Model model, int epochs, double LR, double **points, double **Y, int pointsSize, int YSize) {
+void trainClassPMC(Model model, int epochs, double LR, double **points, double **Y, int pointsSize) {
     //initialisation sigma[]
     double **sigma = new double *[model.layer + 1];
     for (int i = 0; i < model.layer + 1; i++) {

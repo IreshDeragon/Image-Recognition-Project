@@ -23,7 +23,7 @@ double calculTotalSigma(Model model, int layer, int nbInput, int output, double 
 
 double *predictClassPMC(Model model, double *entry);
 
-void trainClassPMC(Model model, int epoch, double LR, double **points, double **Y, int pointsSize, int YSize);
+void trainClassPMC(Model model, int epoch, double LR, double **points, double **Y, int pointsSize);
 
 void updateWeights(Model model, int layer, int nbInput, int output, double *inputs, double sigma, double LR);
 
