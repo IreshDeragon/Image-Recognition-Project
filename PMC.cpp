@@ -131,7 +131,7 @@ void PMC::calcul_sigma(float **sigma) {
     }
 }
 
-void PMC::train(int32_t epoch, float LR, float **points, float **Y, int32_t pointsSize) {
+void PMC::train(int epoch, float LR, float **points, float **Y, int32_t pointsSize) {
     //initialisation sigma[]
     float **sigma = new float *[layer + 1];
     for (int i = 0; i < layer + 1; i++) {
@@ -143,7 +143,7 @@ void PMC::train(int32_t epoch, float LR, float **points, float **Y, int32_t poin
     }
 
     //Itérations sur le batch
-    for (int epoch = 0; epoch < epoch; epoch++) {
+    for (int epo = 0; epo < epoch; epo++) {
         int point = rand() % pointsSize;
         float *result = predict(points[point]);
 

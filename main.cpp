@@ -126,13 +126,14 @@ int main() {
     for(int i = 0; i < p.nbOut; i++){
         cout << fixed << "predict :"<<result[i] << endl;
     }
-    p.train(1000, 0.1, points, Y, 4, 0);
+    p.train(1000, 0.1, points, Y, 4);
     p.tostring();
 
     float* result2 = p.predict(points[3]);
     for(int i = 0; i < p.nbOut; i++){
         cout << fixed <<"predict : " << result2[i] << endl;
     }
+    //delete(&p, sizeof(p));
 
     /*Model PMC = createModelPMC(1, neurons, 2, 2);
     tostring(PMC);
@@ -150,6 +151,7 @@ int main() {
 
 
     //PMC
+
     return 0;
 }
 
